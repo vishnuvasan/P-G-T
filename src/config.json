@@ -1,0 +1,100 @@
+{
+
+  "circos_path": "/panfs/share/software/circos-0.63-4",
+
+  "database_save_path": "/panfs/home/snagaraj/pgtools_db",
+ 
+  "phase2_databases": {
+ "splice":" /panfs/home/snagaraj/splice/spliceNEWDB.fasta",
+ "pseudogene":"/panfs/home/snagaraj/pseudo/pseudogeneDB.final.fa",
+ "utr":"/panfs/home/snagaraj/UTR/UTRnew.fa"
+  },
+
+  "junction_overlap": 3,
+
+  "annotate": {
+    "url": "https://qcmg.org/pgtoolsdbs/",
+    "database": "annotation.sqlite"
+  },
+
+  "feature_extract": {
+    "url": "https://qcmg.org/pgtoolsdbs/",
+    "database": "feature.sqlite"
+  },
+
+  # Lists all the aliases for a given format.
+  "format_aliases": {
+    "mzXML": [ "mzXML", "mzML" ]
+  },
+
+    
+  # Main configuration section used by several commands
+  # within PGTools, including:
+  # * msearch
+  # * fdr
+  # * merge 
+  # * group 
+  "msearch": {
+
+
+    # Default search engines to run. You can override this in commandline,
+    # its just convinient to have it here if you're running several inputs 
+    # and would like to have a default set of engines to run against
+    "defaults": ["omssa", "xtandem"], 
+
+    # Represents the FDR Cutoff in %. As an example, the default 0.01 would mean 
+    # set the FDR cutoff at 1% 
+    "cutoff":1, 
+
+    # Full database path
+    "database": "/panfs/home/snagaraj/Homo_sapiens.GRCh37.74.pep.all.fa",
+
+    # Configuration setup for decoys
+    "decoy": {
+
+      # Setting it to true tells PGTools to prepare the decoy, 
+      # false, obviously won't create one
+      "prepare": true,
+
+      # Setting concat to true, tells PGTools to create concatenated decoy database
+      # as opposed to separate sets of databases
+      "concat": true 
+    },
+
+    "use_fdr_score": 0,
+
+
+    # Algorithm specific configuration
+    "algorithms": [
+
+
+      {
+        "name": "msgf",
+        "command": "/panfs/home/snagaraj/proteogenomics/MSGFPlus/MSGFPlus.jar",
+        "options": " -t 20ppm -ti -1,2 -ntt 2 -tda 1 ",
+        "class": "MSGF"
+      },
+
+      {
+        "name": "omssa",
+        "command": "/panfs/home/snagaraj/proteogenomics/OMSSA/omssa-2.1.9.linux/omssacl", 
+        "formatdb": "/panfs/home/snagaraj/proteogenomics/OMSSA/omssa-2.1.9.linux/formatdb", 
+        "options": "-e 0 -to 1 -te 20 -teppm -tom 0 -tem 0 -w",
+        "class": "OMSSA"
+      },
+
+      {
+        "name": "xtandem",
+        "command": "/panfs/home/snagaraj/proteogenomics/XTANDEM/tandem_new/tandem.exe",
+        "class": "XTandem"
+      }
+
+    ]
+  },
+
+
+  "convert": { 
+    "command": "/Applications/OpenMS-1.10.0/TOPP/FileConverter"
+  }
+}
+
